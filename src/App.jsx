@@ -10,7 +10,13 @@ export default function App() {
 
   useEffect(() => {
     // Conexión con el WebSocket nativo del navegador
-    const ws = new WebSocket('ws://localhost:8080');
+    const isLocal = window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1';
+
+    const BACKEND_URL = isLocal
+      ? 'ws://localhost:8080'
+      : 'wss://servidor-websocket-t6y7.onrender.com';
+
+    const ws = new WebSocket(BACKEND_URL);
 
     ws.onopen = () => {
       console.log('Conectado al servidor WebSocket');
